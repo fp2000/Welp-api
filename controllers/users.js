@@ -2,8 +2,9 @@ require('dotenv').config();
 var mongoose = require('mongoose');
 var User  = mongoose.model('User');
 var nodemailer = require('nodemailer');
+
 const EMAIL = process.env.EMAIL;
-const PASS = process.env.PASS;
+const PASS = process.env.EMAIL;
 
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -49,7 +50,8 @@ exports.postUser = function(req, res) {
 		lastName:	req.body.lastName,
         nickName:	req.body.nickName,
         birthDate:	req.body.birthDate,
-        regDate:	new Date(),
+		regDate:	new Date(),
+		email: 		req.body.email,
 		password:	req.body.password,
 		status:		"pending",
 		userId:		req.body.userId,
@@ -58,7 +60,7 @@ exports.postUser = function(req, res) {
 
 	var mailOptions = {
 		from: 'fpalmaximo@gmail.com',
-		to: 'fp11233@gmail.com',
+		to: req.body.email,
 		subject: 'Sending Email using Node.js',
 		text: '<p>confirm your account here</p><p>http://localhost/welp-frontEnd-master/functions/confirmAccountFunction.php?id=' + req.body.userId + '</p>'
 	};

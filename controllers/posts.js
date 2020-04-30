@@ -20,7 +20,7 @@ exports.findIndexPosts = function(req, res) {
 	Post.find({'status' : 'active'}, function(err, posts) {
                 if(err) res.json(500, err.message);
                 res.json(posts);
-	}).skip(pos).limit(limit);
+	}).sort( { creationDate: -1 } ).skip(pos).limit(limit);
 };
 
 exports.findPostUniqueId = function(req, res) {
@@ -40,7 +40,7 @@ exports.addVisit = function(req, res) {
 };
 
 exports.findPostByAuthor = function(req, res) {
-        Post.findOne({'author' : req.params.nickName} , function(err, post) {
+        Post.find({'author' : req.params.nickName} , function(err, post) {
         if(err) return res.send(500, err.message);    
 		res.status(200).jsonp(post);
         });

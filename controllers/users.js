@@ -1,5 +1,17 @@
+require('dotenv').config();
 var mongoose = require('mongoose');
 var User  = mongoose.model('User');
+var nodemailer = require('nodemailer');
+const EMAIL = process.env.EMAIL;
+const PASS = process.env.PASS;
+
+var transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+	  user: EMAIL,
+	  pass: PASS
+	}
+});
 
 
 //
@@ -44,8 +56,26 @@ exports.postUser = function(req, res) {
 		role:		"common",
 	});
 
+	var mailOptions = {
+		from: 'fpalmaximo@gmail.com',
+		to: 'fp11233@gmail.com',
+		subject: 'Sending Email using Node.js',
+		text: '<p>confirm your account here</p><p>http://localhost/welp-frontEnd-master/functions/confirmAccountFunction.php?id=' + req.body.userId + '</p>'
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+		if (error) {
+		  console.log(error);
+		} else {
+		  console.log('Email sent: ' + info.response);
+		}
+	  }); 
+
+
+
 	user.save(function(err, user) {
 		if(err) return res.send(500, err.message);
+
     res.status(200).jsonp(user);
 	});
 };
@@ -101,6 +131,15 @@ exports.adminUpdateUserStatus = function(req, res) {
 		});
 	});
 };
+
+
+exports.confirmUser = function (req, res) {
+	User.updateOne( { 'userId' : req.body.userId }, { $set: { 'status' : "active"} } , function(err, user) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp("updated");
+	});
+}
+
 
 //
 //	Delete

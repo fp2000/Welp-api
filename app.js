@@ -89,6 +89,8 @@ users.route('/userByNickName/:nickName')
     .get(usersControl.findUserByNickName);
 users.route('/user/:nickName')
     .get(usersControl.findUserByNickName);
+users.route('/user/confirmation/')
+    .post(usersControl.confirmUser);
 app.use(users);
 
 
@@ -117,7 +119,7 @@ post.route('/post/visit/:postId')
     .get(postControl.addVisit);
 post.route('/posts/:pos')
     .get(postControl.findIndexPosts);
-post.route('/posts/author/nickName')
+post.route('/posts/author/:nickName')
     .get(postControl.findPostByAuthor);
 post.route('/post/like/:postId/:nickName')
     .get(postControl.addOrRemoveLikeFromUserNickName);

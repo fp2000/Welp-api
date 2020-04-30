@@ -13,7 +13,6 @@
 - todas las anteriores mas:
 - post /post/
 - post /reply/
-- post /childReply/
 
 
 #### Operaciones que deben de poder hacer ciertos usuarios
@@ -22,7 +21,6 @@
 - put /user/:userId (solo se podrá modificar el nombre y el apellido (y si se añade la foto de perfil))
 - put /post/:post (solo se podrá modificar el hilo si lo ha creado el usuario)
 - put /reply/:replyId (solo se podrá modificar la respuesta si lo ha creado el usuario)
-- put /childReply/:childReplyId (solo se podrá modificar la respuesta hija si lo ha creado el usuario)
 - las peticiones put servirán para eliminar los hilos, los usuarios y las respuestas, ya que se ocultarán, el administrador es el único que puede eliminarlos
 
 
@@ -35,4 +33,3 @@
 - delete /admin/user/:userId
 - delete /admin/post/:postId
 - delete /admin/reply/:replyId
-- delete /admin/childReply/:childReplyId

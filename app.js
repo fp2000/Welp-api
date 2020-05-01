@@ -74,7 +74,11 @@ app.post('/upload', upload.single('photo'), (req, res) => {
     else throw 'error';
 });
 
-
+router.get('/', function(req, res) {
+    res.send("hello there"); 
+ }); 
+ app.use(router);
+ 
 
 // User
 var users = express.Router();

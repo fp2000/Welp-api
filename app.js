@@ -7,7 +7,7 @@ var express         = require("express"),
     require('dotenv').config();
 const cors = require('cors');
 const router = express.Router();
-const URI = process.env.URI;
+const DB_URI = process.env.URI;
 const multer = require("multer");
 
 
@@ -37,7 +37,7 @@ const upload = multer({
 
 
 
-mongoose.connect(URI,{ useUnifiedTopology: true, useNewUrlParser: true},  function(err, res) {
+mongoose.connect(DB_URI,{ useUnifiedTopology: true, useNewUrlParser: true},  function(err, res) {
   if(err) throw err;
   console.log('Connected to Database');
 });

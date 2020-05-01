@@ -1,10 +1,10 @@
-    require('dotenv').config();
 var express         = require("express"),
     app             = express(),
     bodyParser      = require("body-parser"),
     methodOverride  = require("method-override"),
     mongoose        = require('mongoose');
     path = require('path');
+    require('dotenv').config();
 const cors = require('cors');
 const router = express.Router();
 const URI = process.env.URI;

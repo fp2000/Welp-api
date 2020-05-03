@@ -4,7 +4,7 @@ var User  = mongoose.model('User');
 var nodemailer = require('nodemailer');
 
 const EMAIL = process.env.EMAIL;
-const PASS = process.env.EMAIL;
+const PASS = process.env.PASS;
 
 var transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -61,24 +61,20 @@ exports.postUser = function(req, res) {
 	var mailOptions = {
 		from: 'fpalmaximo@gmail.com',
 		to: req.body.email,
-		subject: 'Sending Email using Node.js',
+		subject: 'Welp, please, confirm your account',
 		text: '<p>confirm your account here</p><p>http://localhost/welp-frontEnd-master/functions/confirmAccountFunction.php?id=' + req.body.userId + '</p>'
 	};
 
-	transporter.sendMail(mailOptions, function(error, info){
-		if (error) {
-		  console.log(error);
-		} else {
-		  console.log('Email sent: ' + info.response);
-		}
-	  }); 
-
-
-
 	user.save(function(err, user) {
-		if(err) return res.send(500, err.message);
-
-    res.status(200).jsonp(user);
+		if(err) {return res.send(500, err.message)};
+		transporter.sendMail(mailOptions, function(error, info){
+			if (error) {
+			  console.log(error);
+			} else {
+			  console.log('Email sent: ' + info.response);
+			}
+		}); 
+    	res.status(200).jsonp(user);
 	});
 };
 

@@ -37,7 +37,7 @@ const upload = multer({
 
 
 
-mongoose.connect(DB_URI,{ useUnifiedTopology: true, useNewUrlParser: true},  function(err, res) {
+mongoose.connect(DB_URI,{ useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },  function(err, res) {
   if(err) throw err;
   console.log('Connected to Database');
 });

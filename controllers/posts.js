@@ -102,38 +102,27 @@ exports.addOrRemoveLikeFromUserNickName = function (req, res) {
 //
 
 exports.updatePost = function(req, res) {
-	Post.find({'postId' : req.params.postId} , function(err, post) {
-                post.title      = req.body.title;
-                post.text       = req.body.text;
-                post.content    = req.body.content;		
-		post.save(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200).jsonp(post);
-		});
+	Post.updateOne(
+		{'postId' : req.params.postId},
+		{'title' : req.body.title, 'text' : req.body.text, 'content' : req.body.content}, 
+	
+	function (err, post) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(post);
 	});
 };
 
 exports.deletePostUser = function(req, res) {
-	Post.find({'postId' : req.params.postId} , function(err, post) {
-                post.status      = 'hidden';
-		post.save(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200).jsonp(post);
-		});
+	Post.updateOne(
+		{ 'postId' : req.params.postId },
+		{ 'status' : 'deleted' }, 
+	
+	function (err, post) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(post);
 	});
 };
-exports.updatePostAdmin = function(req, res) {
-	Post.find({'postId' : req.params.postId} , function(err, post) {
-                post.title      = req.body.title;
-                post.text       = req.body.text;
-                post.content    = req.body.content;
-                post.status     = req.body.status;
-		post.save(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200).jsonp(post);
-		});
-	});
-};
+
 
 //
 //      Delete

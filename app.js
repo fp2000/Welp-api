@@ -116,7 +116,9 @@ var post = express.Router();
 post.route('/post')
     .post(postControl.postPost);
 post.route('/post/:postId')
-    .get(postControl.findPostUniqueId);
+    .get(postControl.findPostUniqueId)
+    .put(postControl.updatePost)
+    .delete(postControl.deletePostUser);
 post.route('/posts/recommended/')
     .get(postControl.findRecommendedPosts);
 post.route('/post/visit/:postId')

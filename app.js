@@ -140,12 +140,18 @@ app.use(post);
 var reply = express.Router();
 reply.route('/replys/postId/:postId')
     .get(replyControl.findReplyByPostId);
+reply.route('/reply/:replyId')
+    .put(replyControl.updateReply)
+    .delete(replyControl.deleteReply);
 reply.route('/replys/nickName/:nickName')
     .get(replyControl.findReplyByUserNickName);
 reply.route('/reply/')
     .post(replyControl.postReply);
 reply.route('/reply/child/')
     .post(replyControl.addChildReply);
+reply.route('/reply/child/:replyId')
+    .put(replyControl.modifyChildReply)
+    .delete(replyControl.deleteChildReply);
 app.use(reply);
 
 // delete and update

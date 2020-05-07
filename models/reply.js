@@ -4,8 +4,8 @@ exports = module.exports = function(app, mongoose) {
 	var replySchema = new mongoose.Schema({
 		text:   		{ type: String, required: true },
 		date:   		{ type: Date, 	required: true },
-		replyId: 	    { type: String, required : true },
-		postId:			{ type: String, index: true, unique: true, required : true },
+		replyId: 	    { type: String, index: true, unique: true, required : true },
+		postId:			{ type: String, required: true },
 		nickName:		{ type: String, required: true },
 		status:			{ type: String, required: true },
 		replys: 		{ type: Array },

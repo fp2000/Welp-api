@@ -7,7 +7,7 @@ var Reply  = mongoose.model('Reply');
 //
 
 exports.findReplyByPostId = function(req, res) {
-	Reply.find({'postId' : req.params.postId} , function(err, replys) {
+	Reply.find({'postId' : req.params.postId, 'status' : 'active' } , function(err, replys) {
     if(err) return res.send(500, err.message);    
 	res.status(200).jsonp(replys);
 	});
@@ -62,14 +62,47 @@ exports.addChildReply = function(req, res) {
 //	Update
 //
 
-exports.deleteReplyUser = function(req, res) {
-	Reply.find({'replyId' : req.params.replyId} , function(err, reply) {
-				reply.text 		  = '(deleted)';
-                reply.status      = 'hidden';
-		reply.save(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200).jsonp(reply);
-		});
+exports.updateReply = function(req, res) {
+	Reply.updateOne(
+		{ 'replyId' : req.params.replyId },
+		{ 'text' : req.body.text }, 
+	
+	function (err, reply) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(reply);
+	});
+};
+
+exports.deleteReply = function(req, res) {
+	Reply.updateOne(
+		{ 'replyId' : req.params.replyId },
+		{ 'status' : 'deleted' },
+	
+	function (err, reply) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(reply);
+	});
+};
+
+exports.modifyChildReply = function(req, res) {
+	Reply.updateOne(
+		{ 'replys.childReplyId' : req.body.childReplyId },
+		{ "replys.0.text" : req.body.text } , 
+	
+	function (err, reply) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(reply);
+	});
+};
+
+exports.deleteChildReply = function(req, res) {
+	Reply.updateOne(
+		{ 'replys.childReplyId' : req.body.childReplyId },
+		{ "replys.0.text" : "[ deleted ]" } , 
+	
+	function (err, reply) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(reply);
 	});
 };
 
@@ -77,7 +110,7 @@ exports.deleteReplyUser = function(req, res) {
 //	Delete
 //
 
-exports.deleteReply = function(req, res) {
+exports.adeleteReply = function(req, res) {
 	Reply.findOne({'replyId' : req.params.replyId} , function(err, reply) {
 		reply.remove(function(err) {
 			if(err) return res.send(500, err.message);

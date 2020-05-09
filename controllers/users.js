@@ -40,6 +40,12 @@ exports.findUserByUserId = function(req, res) {
 	});
 };
 
+exports.findUserNickName = function(req, res) {
+	User.findOne({'nickName' : req.params.nickName} , function(err, user){
+		res.send(isEmpty(user));	
+	});
+};
+
 //
 //	Post
 //
@@ -90,45 +96,39 @@ exports.upload = function(req, res) {
 //
 //	Update
 //
- 
-exports.updateUser = function(req, res) {
-	User.find({'nickName' : req.params.nickName} , function(err, user) {
-		user.firstName   = req.body.firstName;
-		user.lastName    = req.body.lastName;
-		user.password    = req.body.password;
-		
-		user.save(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200).jsonp(user);
-		});
+exports.modifyPersonalData = function(req, res) {
+	User.updateOne(
+		{ 'nickName' : req.params.nickName },
+		{ 'firstName' : req.body.firstName, 'lastName' : req.body.lastName }, 
+	
+	function (err, user) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(user);
 	});
 };
 
-exports.adminUpdateUser = function(req, res) {
-	User.find({'nickName' : req.params.nickName} , function(err, user) {
-		user.firstName   = req.body.firstName;
-		user.lastName    = req.body.lastName;
-		user.password    = req.body.password;
-		user.nickName	 = req.body.nickName;
-		user.status		 = req.body.status;		
-		user.birthDate 	 = req.body.birthDate;
-		user.role 		 = req.body.role;
-		user.save(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200).jsonp(user);
-		});
+exports.modifyPassword = function(req, res) {
+	User.updateOne(
+		{ 'nickName' : req.params.nickName },
+		{ 'password' : req.body.password }, 
+	
+	function (err, user) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(user);
 	});
 };
 
-exports.adminUpdateUserStatus = function(req, res) {
-	User.find({'nickName' : req.params.nickName} , function(err, user) {
-		user.status   = req.body.status;
-		user.save(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200).jsonp(user);
-		});
+exports.deleteAccount = function(req, res) {
+	User.updateOne(
+		{ 'nickName' : req.params.nickName },
+		{ 'status' : 'deleted' }, 
+	
+	function (err, post) {
+		if(err) return res.send(500, err.message);
+		res.status(200).jsonp(post);
 	});
 };
+
 
 
 exports.confirmUser = function (req, res) {
@@ -139,15 +139,13 @@ exports.confirmUser = function (req, res) {
 }
 
 
-//
-//	Delete
-//
 
-exports.deleteUser = function(req, res) {
-	User.findOne({'nickName' : req.params.nickName} , req.params.userId, function(err, user) {
-		user.remove(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200);
-		})
-	});
-};
+
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}

@@ -85,14 +85,17 @@ var users = express.Router();
 users.route('/users')
     .get(usersControl.findAllUsers);
 users.route('/user')
-    .get(usersControl.findUserByNickName)
-    .post(usersControl.postUser, upload.single('profilePicture'))
-    .put(usersControl.updateUser)
-    .delete(usersControl.deleteUser);
-users.route('/userByNickName/:nickName')
-    .get(usersControl.findUserByNickName);
+    .post(usersControl.postUser, upload.single('profilePicture'));
+users.route('/user/personalData/:nickName')
+    .put(usersControl.modifyPersonalData);
+users.route('/user/modifyPassword/:nickName')
+    .put(usersControl.modifyPassword);
+users.route('/user/delete/:nickName')
+    .delete(usersControl.deleteAccount);
 users.route('/user/:nickName')
     .get(usersControl.findUserByNickName);
+users.route('/user/check/:nickName')
+    .get(usersControl.findUserNickName);
 users.route('/user/confirmation/')
     .post(usersControl.confirmUser);
 app.use(users);

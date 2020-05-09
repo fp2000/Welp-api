@@ -15,10 +15,10 @@ exports.loginUser = function(req, res) {
                 if (user.password === passwordIn){
                     res.status(200).jsonp(user);
                 } else {
-                    res.send('incorrectPassword')
+                    res.send('Incorrect Password')
                 }                
             } else {
-				res.send('userNotFound')
+				res.send('User not found')
             }
             res.end();
         });        

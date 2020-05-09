@@ -14,13 +14,14 @@ exports.findAllPosts = function(req, res) {
 };
 
 exports.findIndexPosts = function(req, res) {
-        var pos = parseInt(req.params.pos);
+		var pos = parseInt(req.params.pos);
+		var order = { creationDate: -1 };
         var limit = 10;
         if (isNaN(pos)) return null;
 	Post.find({'status' : 'active'}, function(err, posts) {
                 if(err) res.json(500, err.message);
                 res.json(posts);
-	}).sort( { creationDate: -1 } ).skip(pos).limit(limit);
+	}).sort( order ).skip(pos).limit(limit);
 };
 
 exports.findPostUniqueId = function(req, res) {

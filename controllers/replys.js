@@ -51,7 +51,7 @@ exports.addChildReply = function(req, res) {
 
 	Reply.updateOne(
 		{ "replyId": req.body.replyId }, {
-		$push: { "replys": childReply }		   
+			$push: { "replys": childReply }		   
 		}, function(err, reply) {
 	if(err) return res.send(500, err.message);    
 	res.send('addedreply');			

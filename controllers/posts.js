@@ -82,18 +82,34 @@ exports.postPost = function(req, res) {
 };
 
 
-exports.addOrRemoveLikeFromUserNickName = function (req, res) {
-	Post.findOne({'postId' : req.params.postId, 'likes' : {'nickName' : req.params.nickName } }, function(err, post) {
-		if (post == undefined){
-			Post.updateOne({ "postId": req.params.postId }, {
-				$push: { "likes": {'nickName' : req.params.nickName} }		   
-				}, function(err, post) {
-			if(err) return res.send(500, err.message);    
-			res.send('addedLike');			
-			});
-		} else {  
-			res.send('uwu');
-		}
+exports.addOrRemoveLikeFromUserNickName = function (req, res) {	
+	Post.findOne(
+		{
+			'postId' : req.params.postId, 
+			'likes.nickName' : req.params.nickName  
+		}, function(err, post) {
+			if (post == null){
+				var like = new Array({
+					nickName:	    req.params.nickName,
+				});
+				Post.updateOne(
+					{ "postId": req.params.postId }, 
+					{ 
+						$push: { "likes":  like }		   
+					}, function(err, post) {
+						if(err) return res.send(500, err.message);    
+						res.send('addedLike');			
+				});
+			} else {
+				Post.updateOne(
+					{ "postId": req.params.postId }, 
+					{
+						$pull: { 'likes' : {'nickName' : req.params.nickName} } 
+					}, function(err, post) {
+						if(err) return res.send(500, err.message);    
+						res.send(post);			
+				});
+			}
 	});
 };
 

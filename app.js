@@ -48,7 +48,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 app.use('/uploads', express.static('.profilePictures'))
 
-app.use(express.static('public'));
+//app.use(express.static('public'));
 app.use(cors());
 
 

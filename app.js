@@ -8,7 +8,9 @@ var express         = require("express"),
 const cors = require('cors');
 const router = express.Router();
 const DB_URI = process.env.URI;
+const PORT = process.env.PORT || 3000;
 const multer = require("multer");
+
 
 
 const storage = multer.diskStorage({
@@ -174,6 +176,6 @@ topic.route('/topic/')
 app.use(topic);
 
 
-app.listen(3000, function() {
+app.listen(PORT , function() {
   console.log("Node server running on http://localhost:3000");
 });

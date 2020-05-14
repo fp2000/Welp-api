@@ -128,7 +128,7 @@ post.route('/posts/recommended/')
     .get(postControl.findRecommendedPosts);
 post.route('/post/visit/:postId')
     .get(postControl.addVisit);
-post.route('/posts/:pos')
+post.route('/posts/:pos', cors())
     .get(postControl.findIndexPosts);
 post.route('/posts/author/:nickName')
     .get(postControl.findPostByAuthor);

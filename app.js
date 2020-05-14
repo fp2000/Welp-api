@@ -49,7 +49,7 @@ app.use(methodOverride());
 app.use('/uploads', express.static('.profilePictures'))
 
 app.use(express.static('public'));
-app.use(cors())
+app.use(cors());
 
 
 // Import Models and controllers
@@ -82,7 +82,7 @@ router.get('/', function(req, res) {
 
 // User
 var users = express.Router();
-users.route('/users')
+users.route('/users', cors())
     .get(usersControl.findAllUsers);
 users.route('/user')
     .post(usersControl.postUser, upload.single('profilePicture'));
@@ -132,6 +132,8 @@ post.route('/posts/author/:nickName')
     .get(postControl.findPostByAuthor);
 post.route('/post/like/:postId/:nickName')
     .get(postControl.addOrRemoveLikeFromUserNickName);
+post.route('/search/')
+    .get(postControl.findTitleAndPostId);
 app.use(post);
 
 

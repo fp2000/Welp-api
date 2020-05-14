@@ -24,6 +24,27 @@ exports.findIndexPosts = function(req, res) {
 	}).sort( order ).skip(pos).limit(limit);
 };
 
+exports.findTitleAndPostId = function(req, res) {
+	var order = { creationDate: -1 };
+	Post.find(
+		{'status' : 'active'},			 
+		{ 
+			text:0, 
+			author:0,
+			creationDate:0,
+			likes:0,
+			content:0,
+			visits:0,
+			userId:0,
+			status:0,
+			topic:0
+		} ,			
+		function(err, posts) {
+			if(err) res.json(500, err.message);
+			res.json(posts);
+	}).sort( order );
+};
+
 exports.findPostUniqueId = function(req, res) {
         Post.findOne({'postId' : req.params.postId} , function(err, post) {		
         if(err) return res.send(500, err.message);

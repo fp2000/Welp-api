@@ -68,8 +68,8 @@ exports.postUser = function(req, res) {
 		from: 'fpalmaximo@gmail.com',
 		to: req.body.email,
 		subject: 'Welp, please, confirm your account',
-		text: 'Confirm your account with this link: http://welp-main.herokuapp.com/welp/functions/confirmAccountFunction.php?id=' + req.body.userId,
-		html: '<p>Welcome to welp</p><p>Account confirmation is required to create an account</p><p>You can confirm yours with this link: http://welp-main.herokuapp.com/welp/functions/confirmAccountFunction.php?id=' + req.body.userId + '</p>'
+		text: 'Confirm your account with this link: http://welp-main.herokuapp.com/functions/confirmAccountFunction.php?id=' + req.body.userId,
+		html: '<p>Welcome to welp</p><p>Account confirmation is required to create an account</p><p>You can confirm yours with this link: http://welp-main.herokuapp.com/functions/confirmAccountFunction.php?id=' + req.body.userId + '</p>'
 	};
 
 	user.save(function(err, user) {

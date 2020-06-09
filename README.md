@@ -1,35 +1,41 @@
-#### Operaciones que deben de poder hacer todos los usuarios
+#### Operaciones sobre usuarios
 
-- get /user/:nickname
-- get /post/:postId
-- get /posts/:limit
-- get /replys/:postId
-- get /childReplys/:postId/:parentReplyId
-- get /topics/
-- post /user/ (para crear un usuario nuevo)
-
-#### Operaciones que deben de poder hacer los usuarios registrados
-
-- todas las anteriores mas:
-- post /post/
-- post /reply/
+- get /users/
+- post /user/ (para subir foto de perfil)
+- put /user/personalData/:nickName (modifica los datos personales)
+- put /user/modifyPassword/:nickName (modifica la contraseña)
+- delete /user/delete/:nickName (elimina el usuario)
+- get /user/:nickName (encuentra el usuario por nombre de usuario)
+- get /user/check/:nickName (compruba si el nombre e usuario está en uso)
+- post /user/confirmation/ (confirma el usuario con el id de usuario)
 
 
-#### Operaciones que deben de poder hacer ciertos usuarios
 
-- todas las anteriores mas:
-- put /user/:userId (solo se podrá modificar el nombre y el apellido (y si se añade la foto de perfil))
-- put /post/:post (solo se podrá modificar el hilo si lo ha creado el usuario)
-- put /reply/:replyId (solo se podrá modificar la respuesta si lo ha creado el usuario)
-- las peticiones put servirán para eliminar los hilos, los usuarios y las respuestas, ya que se ocultarán, el administrador es el único que puede eliminarlos
+#### Operaciones sobre los posts
+
+  
+- post /post (sube un post)
+- get /post/:postId (obtiene un post por id)
+- put /post/:postId (modifica un post por id)
+- delete /post/:postId (elimina un post por id)
+- get /posts/recommended/ (obtiene los posts recomendados)
+- get /posts/:pos (obtiene 10 posts especificando cuandos posts hay que omitir)
+- get /posts/author/:nickName (obtiene los posts por nickName)
+- get /post/like/:postId/:nickName (añade un like a un post)
+
+#### Operaciones con los comentarios y respuestas
 
 
-#### Operaciones que debe hacer el administrador
+- get /replys/postId/:postId (encuentra los comentarios con el id del post)
+- put /reply/:replyId (modifica el comentario con el id del comentario)
+- delete /reply/:replyId (elimina el comentario con el id del comentario)
+- get  /replys/nickName/:nickName (encuentra los comentarios de un usuario)
+- post /reply/ (añade un comentario)
+- post /reply/child/ (añade una respuesta a un comentario)
+- put /reply/child/:replyId (modifica una respuesta de un comentario)
+- delete /reply/child/:replyId (elimina una respuesta de un comentario)
 
-- todas las anteriores mas:
-- post /admin/topic/
-- put /admin/topic/:topicId
-- delete /admin/topic/:topicId
-- delete /admin/user/:userId
-- delete /admin/post/:postId
-- delete /admin/reply/:replyId
+#### Operaciones con los topicos
+
+- get /topics/ (encuentra todos los topicos)
+- post /topic/ (añade un tópico)
